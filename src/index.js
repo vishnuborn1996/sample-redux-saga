@@ -19,6 +19,7 @@ const mapStateToProps = (state) => {
 const Root = (props) => {
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
+      debugger;
       if (user) {
         props.setUser(user);
         history.push("/");

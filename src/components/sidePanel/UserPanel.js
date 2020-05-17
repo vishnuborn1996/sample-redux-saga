@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, Header, Icon, Dropdown } from "semantic-ui-react";
 import { clearUser } from "../../actions/userActions";
 import { connect } from "react-redux";
 import firebase from "../../library/firebase";
+
 const UserPanel = (props) => {
+  const [user] = useState({
+    ...props.currentUser,
+  });
+
+  useEffect(() => {}, [user]);
+
   const dropdownOptions = () => [
     {
       text: (
         <span>
-          Signed in as <strong>User</strong>
+          Signed in as <strong>{user.displayName}</strong>
         </span>
       ),
       disable: "true",
@@ -45,7 +52,7 @@ const UserPanel = (props) => {
         </Grid.Row>
         <Header style={{ padding: "1.2em" }} as="h4" inverted>
           <Dropdown
-            trigger={<span>User</span>}
+            trigger={<span>{user.displayName}</span>}
             options={dropdownOptions()}
           ></Dropdown>
         </Header>

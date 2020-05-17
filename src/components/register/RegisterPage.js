@@ -11,6 +11,7 @@ const RegisterPage = () => {
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [usersRef, setUsersRef] = useState(firebase.database().ref("users"));
 
   //end of hooks
   const handleChange = (event) => {
@@ -40,6 +41,13 @@ const RegisterPage = () => {
     return Object.keys(_errors).length === 0;
   };
 
+  const saveUser = (createdUser) => {
+    usersRef.child(createdUser.user.uid).set({
+      name: createdUser.user.displayName,
+      avatar: createdUser.user.photoURL,
+    });
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -57,6 +65,7 @@ const RegisterPage = () => {
             displayName: registrationData.username,
           })
           .then(() => {
+            saveUser(createduser).then(() => {});
             setLoading(false);
           })
           .catch((err) => {
