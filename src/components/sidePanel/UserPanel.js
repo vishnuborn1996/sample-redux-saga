@@ -1,0 +1,48 @@
+import React from "react";
+import { Grid, Header, Icon, Dropdown } from "semantic-ui-react";
+import { clearUser } from "../../actions/userActions";
+import { connect } from "react-redux";
+
+const UserPanel = (props) => {
+  const dropdownOptions = () => [
+    {
+      text: (
+        <span>
+          Signed in as <strong>User</strong>
+        </span>
+      ),
+      disable: "true",
+      key: 1,
+    },
+    {
+      text: <span>Change avatar</span>,
+      disable: "true",
+      key: 2,
+    },
+    {
+      text: <span>Sign Out</span>,
+      disable: "true",
+      key: 3,
+    },
+  ];
+  return (
+    <Grid>
+      <Grid.Column>
+        <Grid.Row style={{ padding: "1.2em", margin: 0 }}>
+          <Header inverted floated="left" as="h3">
+            <Icon name="code" />
+            <Header.Content>Dev Chat</Header.Content>
+          </Header>
+        </Grid.Row>
+        <Header style={{ padding: "1.2em" }} as="h4" inverted>
+          <Dropdown
+            trigger={<span>User</span>}
+            options={dropdownOptions()}
+          ></Dropdown>
+        </Header>
+      </Grid.Column>
+    </Grid>
+  );
+};
+
+export default UserPanel;

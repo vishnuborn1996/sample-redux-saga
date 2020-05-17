@@ -23,26 +23,28 @@ module.exports = {
       // Second Rule
       {
         test: /\.css$/,
-        use: [
-          {
-            loader: ["style-loader", "css-loader"],
-          },
-          {
-            loader: "css-loader",
-            options: {
-              modules: true,
-              localsConvention: "camelCase",
-              sourceMap: true,
-            },
-          },
-        ],
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+        loader: require.resolve("url-loader"),
+        options: {
+          limit: 10000,
+          name: "static/media/[name].[hash:8].[ext]",
+        },
+      },
+      {
+        test: [/\.eot$/, /\.ttf$/, /\.svg$/, /\.woff$/, /\.woff2$/],
+        loader: require.resolve("file-loader"),
+        options: {
+          name: "static/media/[name].[hash:8].[ext]",
+        },
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "public/index.html",
-      favicon: "public/favicon.ico",
+      template: "./src/index.html",
     }),
   ],
   devServer: {
