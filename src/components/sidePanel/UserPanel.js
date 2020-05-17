@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Header, Icon, Dropdown } from "semantic-ui-react";
 import { clearUser } from "../../actions/userActions";
 import { connect } from "react-redux";
-
+import firebase from "../../library/firebase";
 const UserPanel = (props) => {
   const dropdownOptions = () => [
     {
@@ -20,11 +20,20 @@ const UserPanel = (props) => {
       key: 2,
     },
     {
-      text: <span>Sign Out</span>,
+      text: <span onClick={handleLogout}>Sign Out</span>,
       disable: "true",
       key: 3,
     },
   ];
+
+  const handleLogout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        props.clearUser();
+      });
+  };
   return (
     <Grid>
       <Grid.Column>
@@ -45,4 +54,4 @@ const UserPanel = (props) => {
   );
 };
 
-export default UserPanel;
+export default connect(null, { clearUser })(UserPanel);
